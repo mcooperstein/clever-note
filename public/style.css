@@ -1,0 +1,30 @@
+#home-title {
+  text-align: center;
+  margin: 20px 0px;
+}
+
+form {
+  width: 50%;
+  display: block;
+  margin: auto;
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+}
+
+#form-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.control-label {
+  margin-bottom: 0px;
+}
+
+.form-control {
+  margin: 5px 0px;
+}
+
+#sign-up-button {
+  margin-top: 10px;
+}
