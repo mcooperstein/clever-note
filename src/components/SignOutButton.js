@@ -1,16 +1,14 @@
 import React, { Component } from "react";
-// import { Link } from "react-router-dom";
-import { auth } from "../firebase/firebase";
+import { auth } from "../firebase";
 
 class SignOutButton extends Component {
   refresh() {
-    // setTimeout(location.reload(), 1000);
-    // To force refresh the page after signing out
+    setTimeout(window.location.reload(), 1000); // To force refresh the page after signing out
   }
   render() {
     return (
       <div onClick={this.refresh}>
-        <button className="btn btn-danger" onClick={auth.doSignOut()}>
+        <button className="btn btn-danger" onClick={auth.doSignOut}>
           Sign Out
         </button>
       </div>

@@ -27,6 +27,7 @@ class LoginForm extends Component {
   handleSubmit = e => {
     e.preventDefault();
     const { email, password } = this.state;
+    console.log(`${email}, ${password}`);
     this.setState({ error: "" });
     doSignInWithEmailAndPassword(email, password)
       .then(this.onLoginSuccess)
@@ -45,6 +46,7 @@ class LoginForm extends Component {
   };
 
   onLoginSuccess = () => {
+    const { history } = this.props;
     // db.doCreateUser(this.state.email,this.state.password)
     //   .then(() => {
     //     this.setState({
@@ -57,8 +59,8 @@ class LoginForm extends Component {
     //   .catch(error => {
     //     this.setState({ error });
     //   });
-    // history.push("/");
-    alert("success");
+    history.push("/dashboard");
+    // alert("success");
   };
 
   render() {
