@@ -11,7 +11,7 @@ const signinReducer = (state = defaultUser, action = {}) => {
     case "ADD_NOTEBOOK":
       return { ...state, notebooks: state.notebooks.concat([action.data]) };
     case "NOTEBOOKS_GET":
-      return { ...state, notebooks: state.notebooks.concat([action.data]) };
+      return { ...state, notebooks: action.data };
     default:
       return state;
   }

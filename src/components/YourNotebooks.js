@@ -43,15 +43,19 @@ class YourNotebooks extends Component {
   }
   componentDidMount() {
     this.accountUpdate();
-  }             
+  }
   render() {
     return (
       <div>
         <Navigation />
         <h1>{this.props.user.email}'s Notebooks</h1>
-          {this.props.user.notebooks.map(notebook => {
-                <Notebook name={notebook} />
-          })}
+        {this.props.user.notebooks.map((notebook, i) => {
+          return (
+            <div key={i}>
+              <Notebook name={notebook} />
+            </div>
+          );
+        })}
       </div>
     );
   }
