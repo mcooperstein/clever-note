@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 // import withAuthentication from "./withAuthentication";
 import Home from "./components/Home";
 import Dashboard from "./components/Dashboard";
+import Notebook from "./components/Notebook";
 import AddNotebooks from "./components/AddNotebooks";
 import YourNotebooks from "./components/YourNotebooks";
 

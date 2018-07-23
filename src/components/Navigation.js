@@ -24,6 +24,11 @@ class Navigation extends Component {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
             <li className="nav-item">
+              <Link className="nav-link" to="/dashboard">
+                Dashboard
+              </Link>
+            </li>
+            <li className="nav-item">
               <Link className="nav-link" to="/your-notebooks">
                 Your Notebooks
               </Link>

@@ -3,10 +3,11 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
+// import rootReducer from "./reducers/rootReducer";
+import signinReducer from "./reducers/signinReducer";
 import App from "./App";
-import notesReducer from "./reducers/notesReducer";
 
-const store = createStore(notesReducer);
+const store = createStore(signinReducer);
 
 ReactDOM.render(
   <Provider store={store}>

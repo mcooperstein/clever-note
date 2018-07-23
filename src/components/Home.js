@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import LoginForm from "./LoginForm";
+import SignUpPage from "./SignUpPage";
+import { auth } from "../firebase";
 
 class Home extends Component {
   constructor(props) {
@@ -9,11 +11,14 @@ class Home extends Component {
       loggedIn: false
     };
   }
+  componentDidMount() {
+    auth.doSignOut;
+  }
   render() {
     return (
       <div id="home-container">
         <h1 id="home-title">CleverNote App</h1>
-        <LoginForm />
+        <SignUpPage />
       </div>
     );
   }

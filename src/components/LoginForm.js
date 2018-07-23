@@ -1,39 +1,56 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
-// import firebase from "firebase";
-import { auth, db, firebase } from "../firebase/index";
-import {
-  doSignInWithEmailAndPassword,
-  doCreateUserWithEmailAndPassword
-} from "../firebase/auth";
+import firebase from "firebase";
+import { auth, db } from "../firebase/index";
+// import {
+//   doSignInWithEmailAndPassword,
+//   doCreateUserWithEmailAndPassword
+// } from "../firebase/auth";
+import { connect } from "react-redux";
 
-const SignUpPage = ({ history }) => (
-  <div>
-    <LoginForm history={history} />
-  </div>
-);
+// const SignUpPage = ({ history }) => (
+//   <div>
+//     <LoginForm history={history} />
+//   </div>
+// );
 
 class LoginForm extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      email: "",
-      password: "",
-      error: ""
-    };
   }
 
   handleSubmit = e => {
     e.preventDefault();
-    const { email, password } = this.state;
-    console.log(`${email}, ${password}`);
+    // const { email, password } = this.state;
+    // console.log(`${email}, ${password}`);
+    // const data = { email };
+    const { history } = this.props;
+    const email = this.getEmail.value;
+    const password = this.getPassword.value;
+    // const userId = this.props.dispatch({
+    //   type: "SIGN_IN",
+    //   email,
+    //   userId
+    // });
     this.setState({ error: "" });
-    doSignInWithEmailAndPassword(email, password)
+    auth
+      .doSignInWithEmailAndPassword(email, password)
       .then(this.onLoginSuccess)
       .catch(() => {
-        doCreateUserWithEmailAndPassword(email, password)
-          .then(this.onLoginSuccess)
+        auth
+          .doCreateUserWithEmailAndPassword(email, password)
+          //   .then(this.onCreateNewUser)
+          .then(authUser => {
+            db.doCreateUser(authUser.user.uid, email).then(() => {
+              this.props.dispatch({
+                type: "SIGN_IN",
+                email,
+                userId: authUser.user.uid
+              });
+              history.push("/dashboard");
+            });
+            // console.log(authUser);
+          })
           .catch(this.onLoginFail);
       });
   };
@@ -47,6 +64,13 @@ class LoginForm extends Component {
 
   onLoginSuccess = () => {
     const { history } = this.props;
+    console.log(history);
+    const email = this.getEmail.value;
+    this.props.dispatch({
+      type: "SIGN_IN",
+      email
+    });
+    // console.log(userId);
     // db.doCreateUser(this.state.email,this.state.password)
     //   .then(() => {
     //     this.setState({
@@ -63,8 +87,33 @@ class LoginForm extends Component {
     // alert("success");
   };
 
+  onCreateNewUser = () => {
+    const email = this.getEmail.value;
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        // User is signed in.
+        var userId = firebase.auth().currentUser.uid;
+        db.doCreateUser(userId, email);
+        this.props.dispatch({
+          type: "SIGN_IN",
+          email,
+          userId
+        });
+      } else {
+        // No user is signed in.
+        console.log("No User Logged In");
+      }
+    });
+    const { history } = this.props;
+    console.log(history);
+    history.push("/dashboard");
+  };
+
   render() {
-    const { email, password, error } = this.state;
+    this.getEmail = "";
+    this.getPassword = "";
+    const email = this.getEmail.value;
+    const password = this.getPassword.value;
     const isInvalid = email === "" || password === "";
 
     return (
@@ -74,16 +123,14 @@ class LoginForm extends Component {
           <label className="control-label">Email:</label>
           <input
             className="form-control"
-            value={email}
-            onChange={event => this.setState({ email: event.target.value })}
+            ref={input => (this.getEmail = input)}
             type="text"
             placeholder="Email Address"
           />
           <label className="control-label">Password:</label>
           <input
             className="form-control"
-            value={password}
-            onChange={event => this.setState({ password: event.target.value })}
+            ref={input => (this.getPassword = input)}
             type="password"
             placeholder="Password"
           />
@@ -95,15 +142,13 @@ class LoginForm extends Component {
           >
             Sign Up
           </button>
-
-          {error && <p>{error.message}</p>}
         </div>
       </form>
     );
   }
 }
 
-// export default LoginForm;
-export default withRouter(SignUpPage);
+export default connect()(LoginForm);
+// export default withRouter(SignUpPage);
 
-export { LoginForm };
+// export { LoginForm };

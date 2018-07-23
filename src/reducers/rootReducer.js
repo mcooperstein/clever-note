@@ -3,8 +3,8 @@ import notesReducer from "./notesReducer";
 import signinReducer from "./signinReducer";
 
 const rootReducer = combineReducers({
-  notes: notesReducer,
-  signin: signinReducer
+  notesReducer,
+  signinReducer
 });
 
 export default rootReducer;
