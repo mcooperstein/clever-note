@@ -18,3 +18,6 @@ export const addNotebook = (id, notebook) =>
   db.ref(`users/${id}/notebooks`).push({
     notebook
   });
+
+export const getNotebook = (id, url) =>
+  db.ref(`users/${id}/notebooks/${url}`).once('value');

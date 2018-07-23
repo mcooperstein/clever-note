@@ -24,13 +24,15 @@ class YourNotebooks extends Component {
           snapshot => {
             console.log(snapshot.val());
             if (snapshot.val() !== null) {
-              let notebooks = Object.values(snapshot.val());
-              //   console.log(notebooks);
-              let notebookNames = notebooks.map(name => {
+              let notebookValues = Object.values(snapshot.val());
+              let notebookKeys = Object.keys(snapshot.val());
+              console.log(notebookKeys);
+              let notebookNames = notebookValues.map(name => {
                 return name.notebook;
               });
               console.log(notebookNames);
               onGetNotebooks(notebookNames);
+              //   onGetNotebooks(snapshot.val());
             }
           }
           //   console.log(JSON.parse(JSON.stringify(snapshot.val())))
@@ -49,13 +51,20 @@ class YourNotebooks extends Component {
       <div>
         <Navigation />
         <h1>{this.props.user.email}'s Notebooks</h1>
-        {this.props.user.notebooks.map((notebook, i) => {
-          return (
-            <div key={i}>
-              <Notebook name={notebook} />
-            </div>
-          );
-        })}
+        {this.props.user.notebooks.length > 0 ? (
+          this.props.user.notebooks.map((notebook, i) => {
+            return (
+              <div key={i}>
+                <Notebook name={notebook} />
+              </div>
+            );
+          })
+        ) : (
+          //   Object.keys(this.props.user.notebooks).map(key => {
+          //     return <p>{key}</p>;
+          //   })
+          <p>You have No Notebooks</p>
+        )}
       </div>
     );
   }

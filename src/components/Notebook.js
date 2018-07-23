@@ -6,7 +6,7 @@ class Notebook extends Component {
     super(props);
   }
   render() {
-    return <Link to="/notebooks">{this.props.name}</Link>;
+    return <Link to={`/notebooks/${this.props.name}`}>{this.props.name}</Link>;
   }
 }
 

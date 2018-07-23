@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 // import withAuthentication from "./withAuthentication";
 import Home from "./components/Home";
 import Dashboard from "./components/Dashboard";
-import Notebook from "./components/Notebook";
+import Notes from "./components/Notes";
 import AddNotebooks from "./components/AddNotebooks";
 import YourNotebooks from "./components/YourNotebooks";
 
@@ -15,6 +15,7 @@ class App extends Component {
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/your-notebooks" component={YourNotebooks} />
           <Route path="/add-notebook" component={AddNotebooks} />
+          <Route path="notebooks/:id" component={Notes} />
           <Route path="/" component={Home} />
         </Switch>
       </BrowserRouter>
